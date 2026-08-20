@@ -523,7 +523,9 @@ function toDashboardSession(session: PersistedSessionState) {
     latest: totalsOnly(session.latest),
     latestDelta: totalsOnly(latestDelta),
     recentTotals: session.snapshots.slice(-12).map((snapshot) => snapshot.totalTokens),
-    snapshotCount: session.snapshots.length
+    snapshotCount: session.snapshots.length,
+    modelTotals: session.latest.modelTotals,
+    modelBreakdowns: session.latest.modelBreakdowns
   };
 }
 

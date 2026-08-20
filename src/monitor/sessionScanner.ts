@@ -94,7 +94,7 @@ async function collectFiles(dirPath: string, sessionRoot: string): Promise<{ ok:
       // Security: validate symlink doesn't escape sessionRoot
       try {
         const realPath = await fs.realpath(fullPath);
-        if (!realPath.startsWith(sessionRoot)) {
+        if (!realPath.toLowerCase().startsWith(sessionRoot.toLowerCase())) {
           console.warn(`[Scanner] Symlink escapes sessionRoot: ${fullPath} -> ${realPath}`);
           continue;
         }
@@ -112,7 +112,7 @@ async function collectFiles(dirPath: string, sessionRoot: string): Promise<{ ok:
     // Security: validate symlink doesn't escape sessionRoot for files too
     try {
       const realPath = await fs.realpath(fullPath);
-      if (!realPath.startsWith(sessionRoot)) {
+      if (!realPath.toLowerCase().startsWith(sessionRoot.toLowerCase())) {
         console.warn(`[Scanner] Symlink escapes sessionRoot: ${fullPath} -> ${realPath}`);
         continue;
       }
