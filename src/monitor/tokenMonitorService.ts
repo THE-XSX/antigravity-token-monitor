@@ -194,7 +194,7 @@ export class TokenMonitorService implements vscode.Disposable {
         const parser = this.parserFactory(config);
         const artifactStore = config.useRpcExport ? new RpcArtifactStore(config.sessionRoot) : undefined;
         await this.refreshPricing();
-        const scanResult = normalizeScanResult(await this.scanner.scan(config.sessionRoot), config.sessionRoot);
+        const scanResult = normalizeScanResult(await this.scanner.scan(config.sessionRoots || config.sessionRoot), config.sessionRoot);
         if (!scanResult.complete) {
           this.lastError = scanResult.error ?? 'Session scan did not complete.';
           return;
@@ -414,7 +414,7 @@ export class TokenMonitorService implements vscode.Disposable {
     this.exportRunning = true;
     this.emit();
     try {
-      const scanResult = normalizeScanResult(await this.scanner.scan(config.sessionRoot), config.sessionRoot);
+      const scanResult = normalizeScanResult(await this.scanner.scan(config.sessionRoots || config.sessionRoot), config.sessionRoot);
       if (!scanResult.complete) {
         this.lastExportError = scanResult.error ?? 'Session scan did not complete.';
         this.log(`Export skipped: ${this.lastExportError}`);
